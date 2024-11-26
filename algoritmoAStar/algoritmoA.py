@@ -2,6 +2,7 @@ import pygame
 #Cola de prioridad para nodos vecinos 
 from queue import PriorityQueue
 import time
+import math
 
 # Configuraciones iniciales
 ANCHO_VENTANA = 800
@@ -136,11 +137,17 @@ def obtener_click_pos(pos, filas, ancho):
     return fila, col
 
 #Inicio implementaciones para A*
-# Heurística: Estima la distancia entre dos nodos en este caso inicio y fin usando la distancia de Manhattan 
+# Heurística: Estima la distancia entre dos nodos en este caso inicio y fin usando la distancia de Manhattan (preferible si solo son movimientos ortogonales)
+# def heuristica(p1, p2):
+#     x1, y1 = p1
+#     x2, y2 = p2
+#     return abs(x1 - x2) + abs(y1 - y2)
+
+#Como el algoritmo utiliza diagonales se usa la Distancia Euclidiana que es mejor para estos casos
 def heuristica(p1, p2):
     x1, y1 = p1
     x2, y2 = p2
-    return abs(x1 - x2) + abs(y1 - y2)
+    return math.sqrt((x1 - x2)**2 + (y1 - y2)**2) 
 
 # Reconstrucción del camino más corto
 def reconstruir_camino(came_from, current, draw):
