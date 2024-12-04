@@ -6,6 +6,10 @@ __pycache__/
 # Cython debug symbols
 *.pyd
 
+#Directories
+/entrenamientoPlantas
+/CNN/cars
+
 # Environments
 .venv/
 env/

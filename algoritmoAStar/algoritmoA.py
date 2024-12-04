@@ -17,6 +17,7 @@ VERDE = (0, 255, 0)
 ROJO = (255, 0, 0)
 NARANJA = (255, 165, 0)
 PURPURA = (128, 0, 128)
+YELLOW = (255,255,0)
 
 pygame.font.init()
 
@@ -29,8 +30,10 @@ class Nodo:
         self.y = col * ancho
         self.color = BLANCO
         self.ancho = ancho
-        self.total_filas = total_filas\
-        #adicion de arreglo de vecinos para tener la info a la mano
+        self.total_filas = total_filas
+        self.g = float('inf')
+        self.h = float('inf') 
+        self.f = float('inf') 
         self.vecinos = [] 
 
     def get_pos(self):
@@ -60,15 +63,27 @@ class Nodo:
     def hacer_camino(self):
         self.color = VERDE
 
+    def hacer_analisis(self):
+        self.color = YELLOW
+
     def dibujar(self, ventana):
+
         pygame.draw.rect(ventana, self.color, (self.x, self.y, self.ancho, self.ancho))
+        if self.g != float('inf') and self.h != float('inf') and self.f != float('inf'):
+            FUENTE = pygame.font.SysFont('Arial', 12)  # Fuente para el texto
+            ventana.blit(FUENTE.render(f'g: {self.g:.1f}', True, NEGRO), (self.x + 5, self.y + 5))
+            ventana.blit(FUENTE.render(f'h: {self.h:.1f}', True, NEGRO), (self.x + 5, self.y + 20))
+            ventana.blit(FUENTE.render(f'f: {self.f:.1f}', True, NEGRO), (self.x + 5, self.y + 35))
+            
+
+
 
     #Agregado de funcion que busca a los vecinos del nodo
     def actualizar_vecinos(self, grid):
         self.vecinos = []
         global costoDiagonal, costoOrtogonal
         #Definición de costos
-        costoDiagonal = 2 
+        costoDiagonal = 1.414 
         costoOrtogonal = 1
 
         # Verificar vecino abajo con fila+1
@@ -138,16 +153,18 @@ def obtener_click_pos(pos, filas, ancho):
 
 #Inicio implementaciones para A*
 # Heurística: Estima la distancia entre dos nodos en este caso inicio y fin usando la distancia de Manhattan (preferible si solo son movimientos ortogonales)
-# def heuristica(p1, p2):
-#     x1, y1 = p1
-#     x2, y2 = p2
-#     return abs(x1 - x2) + abs(y1 - y2)
-
-#Como el algoritmo utiliza diagonales se usa la Distancia Euclidiana que es mejor para estos casos
 def heuristica(p1, p2):
+    peso_heuristica = 1.5
     x1, y1 = p1
     x2, y2 = p2
-    return math.sqrt((x1 - x2)**2 + (y1 - y2)**2) 
+    return peso_heuristica * abs(x1 - x2) + abs(y1 - y2)
+
+#Como el algoritmo utiliza diagonales se usa la Distancia Euclidiana que es mejor para estos casos
+# def heuristica(p1, p2):
+#     peso_heuristica = 1.5
+#     x1, y1 = p1
+#     x2, y2 = p2
+#     return peso_heuristica * math.sqrt((x1 - x2)**2 + (y1 - y2)**2) 
 
 # Reconstrucción del camino más corto
 def reconstruir_camino(came_from, current, draw):
@@ -239,6 +256,11 @@ def algoritmo_a_star(draw, grid, inicio, objetivo):
                 g_score[vecino] = tentative_g_score
                 f_score[vecino] = g_score[vecino] + heuristica(vecino.get_pos(), objetivo.get_pos())
 
+                #Actualización de valores para impresión
+                vecino.g = tentative_g_score
+                vecino.h = heuristica(vecino.get_pos(), objetivo.get_pos())
+                vecino.f = f_score[vecino]
+
                 # Si el vecino no está en open_set, lo agregamos
                 if vecino not in open_set_hash:
                     open_set.put((f_score[vecino], vecino))
@@ -257,7 +279,7 @@ def algoritmo_a_star(draw, grid, inicio, objetivo):
 #FUNCIÓN PRINCIPAL
 def main(ventana, ancho):
     global grid, FILAS
-    FILAS = 10
+    FILAS = 11
     grid = crear_grid(FILAS, ancho)
 
     inicio = None
@@ -301,6 +323,10 @@ def main(ventana, ancho):
                 if event.key == pygame.K_SPACE and inicio and fin:
                     for fila in grid:
                         for nodo in fila:
+                            nodo.g = float('inf')
+                            nodo.h = float('inf')
+                            nodo.f = float('inf')
+                            nodo.padre = None
                             nodo.actualizar_vecinos(grid)
 
                     algoritmo_a_star(actualizar_ventana, grid, inicio, fin)
