@@ -8,10 +8,16 @@ __pycache__/
 
 #Directories
 /entrenamientoPlantas
-/CNN/cars
+PROYECTO3CNN/cars dataset/CARSDOTCOMSCRAP/
+PROYECTO3CNN/cars dataset/ImagenesProcesadasCarros21x28/
+PROYECTO3CNN/cars dataset/Imagenes procesadas carros/
+PROYECTO3CNN/cars dataset/Imagenes de carros mediante Scrapping web.rar
+PROYECTO3CNN/cars dataset/Imagenes procesadas de automoviles.rar
+
 
 # Environments
 .venv/
+my_env/
 env/
 venv/
 ENV/
