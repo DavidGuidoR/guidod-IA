@@ -1,5 +1,8 @@
 # Reformas mediante Ollama
 
+# Video explicativo
+<https://www.youtube.com/watch?v=MF0sba8wy64>
+
 ## Introducción y configuración del modelo
 
 Para la construcción de este proyecto se realizo en el sistema operativo Windows 11 mediante el launcher de Ollama para poder descargar los modelos disponibles que ofrece Meta, de manera gratuita y de ejecución local.

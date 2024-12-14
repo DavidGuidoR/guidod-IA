@@ -6,11 +6,11 @@ FUENTE = "https://www.youtube.com/watch?v=GonCN4PuT-Q&t=1697s"
 FECHA = "12/10/2024"
 
 # Ruta del archivo MP3 y salida
-ruta_audio_mp3 = "./ScrapVideo/InteramericanadeDerechosHumanos.mp3"  # Cambia esto por la ruta de tu archivo MP3
+ruta_audio_mp3 = "./ScrapVideo/InteramericanadeDerechosHumanos.mp3"
 ruta_salida = "Audienciavid.txt"
 # Cargar el modelo de Whisper
 print("Cargando el modelo de Whisper...")
-modelo = whisper.load_model("base")  # Cambia a 'small', 'medium', o 'large' si necesitas más precisión
+modelo = whisper.load_model("base") 
 
 # Transcribir el audio
 print("Transcribiendo el audio...")

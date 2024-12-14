@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 # URL de la página que deseas scrapear
-url = "https://politica.expansion.mx/mexico/2024/12/06/desaparicion-organismos-autonomos-trabajadores"  # Reemplaza con la URL de la página web
+url = "https://elpais.com/mexico/2024-12-10/norma-pina-lanza-su-critica-mas-dura-a-los-gobiernos-de-morena-se-nos-llamo-traidores-por-no-ser-parte-del-proyecto-politico-dominante.html"  # Reemplaza con la URL de la página web
 
 # Guardar el texto en un archivo TXT
 output_path = "articulo_extraido28.txt"
